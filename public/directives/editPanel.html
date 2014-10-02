@@ -1,0 +1,21 @@
+<p>Edit Action Item</p>
+<p class="area">{{arealabel}}</p>
+<p class="category">{{categorylabel}} : {{categoryname}}</p>
+<!--<form name="frmEditPanel">-->
+    <div>
+        <p>Reason for Challenge</p>
+        <textarea ng-model="reasonContent" placeholder="Reason for Challenge" required></textarea>
+    </div>
+    <div>
+        <p>Solution &amp; Anticipated Green Date</p>
+        <textarea ng-model="solutionContent" placeholder="Solution &amp; Anticipated Green Date" required></textarea>
+    </div>
+    <div>
+        <p>Support Needed</p>
+        <textarea ng-model="supportContent" placeholder="Support Needed" required></textarea>
+    </div>
+    <div>
+        <button id="btnCancel" ng-click="cancelPanel();">Cancel</button>
+        <button id="btnSave" ng-click="savePanel();"><!--ng-disabled='!frmEditPanel.$valid'-->Save</button>
+    </div>
+<!--</form>-->

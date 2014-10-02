@@ -1,0 +1,19 @@
+br(clear="all")
+div(class="tileView {{colorName}}", ng-click="showEditPanelFlag = true;")
+    div(id="areaLabel")
+        {{arealabel}}
+    div(id="categoryLabel")
+        {{categorylabel}}
+    div(id="category")
+        {{categoryname}}
+    p Reason for Challenge
+    div(class = "panelContent")
+        {{reasonContent}}
+    p Solution & Anticipated Green Date
+    div(class = "panelContent")
+        {{solutionContent}}
+    p Support Needed
+    div(class = "panelContent")
+        {{supportContent}}
+
+div(edit-panel class="editPanel", ng-show="showEditPanelFlag")

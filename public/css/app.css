@@ -1,0 +1,300 @@
+/* app css stylesheet */
+body{
+    font-family:arial, sans-serif;
+}
+
+.menuContainer{
+    width:120px;
+    height:40px;
+    border: 0.1em solid #ddd;
+}
+.menu {
+  list-style: none;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu > li {
+  display: inline;
+  float:left;
+  cursor:pointer;
+}
+
+.menu > li > div.inactive {
+    opacity:0.6;
+}
+
+.mnuDash{
+    position:relative;
+    background:url(../img/dashboard.png) no-repeat center top;
+    width:60px;
+    margin:-10px 0 0 0px;
+}
+
+.mnuActionPlan{
+    position:relative;
+    background:url(../img/actionplan.png) no-repeat center top;
+    width:60px;
+    margin:-10px 0 0 0px;
+}
+
+.mnuDash:after {
+    content:"dashboard";
+    font-size:10px;
+    line-height:40px;
+    margin-left:6px;
+}
+
+.mnuActionPlan:after {
+    content:"action plan";
+    font-size:10px;
+    line-height:40px;
+    margin-left:5px;
+}
+
+/* -------- View1 Start -------- */
+
+.areaLabel{
+    position:absolute;
+    font-size:12px;
+    width:80px;
+
+}
+
+.colorSelector{
+    position:relative;
+    width:60px;
+    height:20px;
+    border: 0.1em solid #ddd;
+    margin-top:40px;
+    float:left;
+    cursor:pointer;
+}
+.colorSelector.blue{
+    background-color:#499CC9;
+}
+.colorSelector.green{
+    background-color:#79AD3C;
+}
+.colorSelector.yellow{
+    background-color:#FFC131;
+}
+.colorSelector.red{
+    background-color:#ff5f5e;
+}
+.colorSelector.white{
+    background-color:#fff;
+}
+
+.colorPanel{
+    position:relative;
+    float:left;
+    background-color:#eee;
+    border: 0.15em solid #999;
+    width:80px;
+    height:150px;
+    margin:13px 0 0 15px;
+}
+
+.colorPanel:before{
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+    left:-38px;
+    top:17px;
+    border:18px solid;
+    border-color:transparent #999 transparent transparent;
+}
+
+.colorPanel:after{
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+    left:-32px;
+    top:20px;
+    border:15px solid;
+    border-color:transparent #eee transparent transparent;
+}
+
+.colorPanel > div {
+    margin:5px 10px;
+    cursor: pointer;
+}
+
+.colorPanel #BluePanel{
+    position:relative;
+    width:60px;
+    height:20px;
+    background-color:#499CC9;
+    float:left;
+}
+
+.colorPanel #GreenPanel{
+    position:relative;
+    width:60px;
+    height:20px;
+    background-color:#79AD3C;
+    float:left;
+}
+
+.colorPanel #YellowPanel{
+    position:relative;
+    width:60px;
+    height:20px;
+    background-color:#FFC131;
+    float:left;
+}
+
+.colorPanel #RedPanel{
+    position:relative;
+    width:60px;
+    height:20px;
+    background-color:#FF5F5E;
+    float:left;
+}
+
+.colorPanel #WhitePanel{
+    position:relative;
+    width:60px;
+    height:20px;
+    background-color:#FFF;
+    float:left;
+}
+
+/* -------- View1 End -------- */
+
+/* -------- View2 Start -------- */
+.tileView{
+    position:relative;
+    width:350px;
+    height:200px;
+    border: 0.1em solid #ddd;
+    margin-top:10px;
+    float:left;
+    cursor:pointer;
+    padding:5px 10px;
+}
+.tileView:before{
+    clear:all;
+}
+.tileView.blue{
+    background-color:#499CC9;
+}
+.tileView.green{
+    background-color:#79AD3C;
+}
+.tileView.yellow{
+    background-color:#FFC131;
+}
+.tileView.red{
+    background-color:#ff5f5e;
+}
+.tileView.white{
+    background-color:#fff;
+}
+
+.tileView #areaLabel{
+    float:right;
+    font-weight:bold;
+    font-size:15px;
+    text-transform:uppercase;
+    color:#000;
+}
+
+.tileView #categoryLabel{
+    font-weight:bold;
+    font-size:14px;
+    color:#fff;
+    line-height:20px;
+}
+
+.tileView #category{
+    font-weight:bold;
+    font-size:14px;
+    color:#000;
+    line-height:20px;
+}
+
+.tileView p{
+    font-size:14px;
+    line-height:18px;
+    margin:10px 0 0 0;
+}
+
+.tileView>div.panelContent{
+    font-size:14px;
+    color:#fff;
+    line-height:18px;
+}
+
+.editPanel{
+    position:relative;
+    float:left;
+    background-color:#eee;
+    border: 0.15em solid #999;
+    width:300px;
+    height:330px;
+    margin:10px 0 0 15px;
+    padding:5px 10px;
+}
+
+.editPanel:before{
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+    left:-38px;
+    top:17px;
+    border:18px solid;
+    border-color:transparent #999 transparent transparent;
+}
+
+.editPanel:after{
+    content:'';
+    position:absolute;
+    width:0;
+    height:0;
+    left:-32px;
+    top:20px;
+    border:15px solid;
+    border-color:transparent #eee transparent transparent;
+}
+
+.editPanel p{
+    font-size:14px;
+    line-height:20px;
+    margin:0px;
+}
+
+.editPanel .area{
+    text-transform:uppercase;
+    margin-top:20px;
+}
+
+.editPanel .category{
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.editPanel div{
+    margin-top:10px;
+}
+
+.editPanel textarea{
+    width:100%;
+}
+
+.editPanel button{
+    text-transform:uppercase;
+}
+
+.editPanel #btnCancel{
+    float:left;
+}
+
+.editPanel #btnSave{
+    float:right;
+}
+/* -------- View2 End -------- */
