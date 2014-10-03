@@ -68,7 +68,7 @@ angular.module('myApp.controllers', []).
      //Controller for View2
      $scope.categoryname = $rootScope.basedata.categoryname;
      $scope.arealabel = $rootScope.basedata.arealabel;
-     $scope.categorylabel = $rootScope.basedata.categoryname;
+     $scope.categorylabel = $rootScope.basedata.categorylabel;
      $scope.colorName = $rootScope.colordata.panelcolor;
      $scope.reasonContent = $rootScope.itemdata.reasonContent;
      $scope.solutionContent = $rootScope.itemdata.solutionContent;
