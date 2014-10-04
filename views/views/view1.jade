@@ -1,5 +1,7 @@
 p {{categoryname}}
 div(class="areaLabel"){{arealabel}}
+input(type="button", ng-click="setColor();", value="Click when done", class="btnDone")
+input(type="button", ng-click="reset()", value="Reset", class="btnReset")
 div
     div(class = "colorSelector {{colorName}}", ng-click="showColorPanelFlag = true;")
     div(color-panel class="colorPanel", ng-show="showColorPanelFlag")

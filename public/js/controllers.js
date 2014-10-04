@@ -5,6 +5,7 @@ angular.module('myApp.controllers', []).
 
     $scope.mnuDashActive = "";
     $scope.mnuActionPlanActive = "inactive";
+             $scope.mnuDisableFlag = true;
              
     $scope.loadValues = function(){
          console.log('Load Data');
@@ -48,19 +49,36 @@ angular.module('myApp.controllers', []).
     $scope.categoryname = $rootScope.basedata.categoryname;
     $scope.arealabel = $rootScope.basedata.arealabel;
     $scope.colorName = $rootScope.colordata.panelcolor;
-             
+
     $scope.showColorPanelFlag = false;
 
     $scope.saveColor = function(colorData){
-         $http.post('/api/savecolor', {data:colorData}, {}).
+         $scope.colorName = colorData.panelcolor;
+    };
+             
+    $scope.setColor = function(){
+         $http.post('/api/savecolor', {data:$scope.colorName}, {}).
          success(function (data, status, headers, config) {
-             console.log("Success:"+data);
-             $scope.colorName = colorData.panelcolor;
+             //console.log("Success:"+data);
+             
              $rootScope.colordata = colorData;
              $scope.showColorPanelFlag = false;
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);
+         });
+    };
+             
+    $scope.reset = function(){
+         $http.post('/api/initcolor', {}, {}).
+         success(function (data, status, headers, config) {
+                 //console.log("Success:"+data);
+                 $scope.colorName = 'green';
+                 $rootScope.colordata = 'green';
+                 $scope.showColorPanelFlag = false;
+         }).
+         error(function (data, status, headers, config) {
+               console.log("Error:"+status);
          });
     };
   }).

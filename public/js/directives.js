@@ -30,6 +30,7 @@ angular.module('myApp.directives', []).
         restrict:'A',
         templateUrl:'directives/colorPanel.html',
         link:function(scope, element, attrs){
+            
             scope.setPanelColor = function(colorname){
                 var colordata = {panelcolor:colorname};
                 scope.saveColor(colordata);

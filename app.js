@@ -57,6 +57,8 @@ app.post('/api/loadbase', api.loadbase);
 app.post('/api/loadcolor', api.loadcolor);
 app.post('/api/loaditem', api.loaditem);
 
+app.post('/api/initcolor', api.initcolor);
+
 app.post('/api/savecolor', api.savecolor);
 app.post('/api/saveitem', api.saveitem);
 

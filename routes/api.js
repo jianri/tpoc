@@ -10,7 +10,7 @@ var initBaseData = {
     arealabel:'Overall Performance'
 };
 var initColorData = {
-    panelcolor : 'red'
+    panelcolor : 'green'
 };
 var initItemData = {
     reasonContent:'',
@@ -32,29 +32,24 @@ var createInitData = function(callback){
     db.collection('tblbase', function(err, collection){
         collection.insert(initBaseData, {safe : true}, function(err, result){
             if(result){
-                          
                 db.collection('tblcolor', function(err, collection){
-                    collection.insert(initColorData, {safe : true}, function(err, result){
+                    collection.insert(initColorData, {safe : true},
+                    function(err, result){
                       if(result){
-                                      
                           db.collection('tblitem', function(err, collection){
                             collection.insert(initItemData, {safe : true}, function(err, result){
                               if(result){
-                              
                                   return true;
-                              
                               }else{
                                   return false;
                               }
                             });
                           });
-                                      
                       }else{
                           return false;
                       }
                     });
                 });
-                          
              }else{
                   return false;
              }
@@ -67,7 +62,6 @@ exports.loadbase = function (req, res) {
         if(o){
             console.log('Base Data:'+o);
             res.json(o);
-            
         }else{
              if(createInitData()){
                  res.json(initBaseData);
@@ -124,4 +118,18 @@ exports.savecolor = function(req, res){
             });
         });
     }
+};
+
+exports.initcolor = function(req, res){
+    db.collection('tblcolor').remove({}, function(e,o){
+         db.collection('tblcolor', function(err, collection){
+             collection.insert('green', {safe : true}, function(err, result){
+                 if(result){
+                     res.json({result:true});
+                 }else{
+                     res.json({result:false});
+                 }
+             });
+         });
+    });
 };
