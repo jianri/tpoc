@@ -61,7 +61,7 @@ angular.module('myApp.controllers', []).
          success(function (data, status, headers, config) {
              //console.log("Success:"+data);
              
-             $rootScope.colordata = colorData;
+             $rootScope.colordata = $scope.colorName;
              $scope.showColorPanelFlag = false;
          }).
          error(function (data, status, headers, config) {
