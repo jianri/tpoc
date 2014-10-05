@@ -139,6 +139,7 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
      };
      
      $scope.loaddata = function(){
+             console.log('loading data');
          $http.post('/api/loadbase', {}, {}).
          success(function (data, status, headers, config) {
                  $scope.categoryname = data.categoryname;
@@ -152,6 +153,7 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          $http.post('/api/loadcolor', {}, {}).
          success(function (data, status, headers, config) {
              $scope.colorName = data.panelcolor;
+                 console.log($scope.colorName);
          }).
          error(function (data, status, headers, config) {
                console.log("Error:"+status);
@@ -189,6 +191,8 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
                  
          SceneService.setScene('view2');
      }
+             
+     $scope.loaddata();
 
      $scope.showEditPanelFlag = false;
              
