@@ -137,55 +137,58 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          solution:'(enter a solution and date)',
          support:'(enter support needed)'
      };
-     $http.post('/api/loadbase', {}, {}).
-     success(function (data, status, headers, config) {
-             $scope.categoryname = data.categoryname;
-             $scope.arealabel = data.arealabel;
-             $scope.categorylabel = data.categorylabel;
-     }).
-     error(function (data, status, headers, config) {
-           console.log("Error:"+status);
-     });
      
-     $http.post('/api/loadcolor', {}, {}).
-     success(function (data, status, headers, config) {
-         $scope.colorName = data.panelcolor;
-     }).
-     error(function (data, status, headers, config) {
-           console.log("Error:"+status);
-     });
-             
-     $http.post('/api/loaditem', {}, {}).
-     success(function (data, status, headers, config) {
-         $scope.initItem = data;
+     $scope.loaddata = function(){
+         $http.post('/api/loadbase', {}, {}).
+         success(function (data, status, headers, config) {
+                 $scope.categoryname = data.categoryname;
+                 $scope.arealabel = data.arealabel;
+                 $scope.categorylabel = data.categorylabel;
+         }).
+         error(function (data, status, headers, config) {
+               console.log("Error:"+status);
+         });
+         
+         $http.post('/api/loadcolor', {}, {}).
+         success(function (data, status, headers, config) {
+             $scope.colorName = data.panelcolor;
+         }).
+         error(function (data, status, headers, config) {
+               console.log("Error:"+status);
+         });
+                 
+         $http.post('/api/loaditem', {}, {}).
+         success(function (data, status, headers, config) {
+             $scope.initItem = data;
 
-         if(data.reasonContent){
-             $scope.reasonContent = data.reasonContent;
-             $scope.nullcontent1 = "";
-         }else{
-             $scope.reasonContent = $scope.nullcontent.reason;
-             $scope.nullcontent1 = "placeholder";
-         }
-         if(data.solutionContent){
-             $scope.solutionContent = data.solutionContent;
-             $scope.nullcontent2 = "";
-         }else{
-             $scope.solutionContent = $scope.nullcontent.solution;
-             $scope.nullcontent2 = "placeholder";
-         }
-         if(data.supportContent){
-             $scope.supportContent = data.supportContent;
-             $scope.nullcontent3 = "";
-         }else{
-             $scope.supportContent = $scope.nullcontent.support;
-             $scope.nullcontent3 = "placeholder";
-         }
-     }).
-     error(function (data, status, headers, config) {
-           console.log("Error:"+status);
-     });
-             
-     SceneService.setScene('view2');
+             if(data.reasonContent){
+                 $scope.reasonContent = data.reasonContent;
+                 $scope.nullcontent1 = "";
+             }else{
+                 $scope.reasonContent = $scope.nullcontent.reason;
+                 $scope.nullcontent1 = "placeholder";
+             }
+             if(data.solutionContent){
+                 $scope.solutionContent = data.solutionContent;
+                 $scope.nullcontent2 = "";
+             }else{
+                 $scope.solutionContent = $scope.nullcontent.solution;
+                 $scope.nullcontent2 = "placeholder";
+             }
+             if(data.supportContent){
+                 $scope.supportContent = data.supportContent;
+                 $scope.nullcontent3 = "";
+             }else{
+                 $scope.supportContent = $scope.nullcontent.support;
+                 $scope.nullcontent3 = "placeholder";
+             }
+         }).
+         error(function (data, status, headers, config) {
+               console.log("Error:"+status);
+         });
+                 
+         SceneService.setScene('view2');
+     }
 
      $scope.showEditPanelFlag = false;
              
