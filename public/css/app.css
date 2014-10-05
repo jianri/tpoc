@@ -223,6 +223,8 @@ body{
     font-size:14px;
     color:#fff;
     line-height:18px;
+    max-height:35px;
+    overflow:hidden;
 }
 
 .tileView > div.panelContent.placeholder{
