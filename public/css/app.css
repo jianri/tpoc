@@ -228,10 +228,10 @@ body{
     position:relative;
     float:left;
     background-color:#eee;
-    border: 0.15em solid #999;
+    border: 0.1em solid #999;
     width:300px;
     height:370px;
-    margin:10px 0 0 15px;
+    margin:10px 0 0 16px;
     padding:5px 10px;
 }
 
@@ -240,9 +240,9 @@ body{
     position:absolute;
     width:0;
     height:0;
-    left:-38px;
-    top:17px;
-    border:18px solid;
+    left:-34px;
+    top:18px;
+    border:17px solid;
     border-color:transparent #999 transparent transparent;
 }
 
@@ -252,8 +252,8 @@ body{
     width:0;
     height:0;
     left:-32px;
-    top:20px;
-    border:15px solid;
+    top:19px;
+    border:16px solid;
     border-color:transparent #eee transparent transparent;
 }
 

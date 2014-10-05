@@ -12,14 +12,14 @@ angular.module('myApp.directives', []).
         templateUrl:'directives/mnuMenu.html',
         link:function(scope, element, attrs, location){
             scope.goView1 = function(){
-                scope.mnuDashActive = "";
-                scope.mnuActionPlanActive = "inactive";
+                /*scope.mnuDashActive = "";
+                scope.mnuActionPlanActive = "inactive";*/
                 scope.goView('/view1');
             };
             
             scope.goView2 = function(){
-                scope.mnuDashActive = "inactive";
-                scope.mnuActionPlanActive = "";
+                /*scope.mnuDashActive = "inactive";
+                scope.mnuActionPlanActive = "";*/
                 scope.goView('/view2');
             };
         }

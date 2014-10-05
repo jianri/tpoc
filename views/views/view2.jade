@@ -1,5 +1,5 @@
 br(clear="all")
-div(class="tileView {{colorName}}", ng-click="showEditPanelFlag = true;", ng-if="colorName=='red' || colorName=='yellow'")
+div(class="tileView {{colorName}}", ng-click="showEditPanel();", ng-if="colorName=='red' || colorName=='yellow'")
     div(id="areaLabel")
         {{arealabel}}
     div(id="categoryLabel")
