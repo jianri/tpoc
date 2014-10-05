@@ -121,16 +121,24 @@ exports.savecolor = function(req, res){
     }
 };
 
-exports.initcolor = function(req, res){
-    db.collection('tblcolor').remove({}, function(e,o){
-         db.collection('tblcolor', function(err, collection){
-             collection.insert(initColorData, {safe : true}, function(err, result){
-                 if(result){
-                     res.json({result:true});
-                 }else{
-                     res.json({result:false});
-                 }
-             });
-         });
+exports.initdata = function(req, res){
+    db.collection('tblitem').remove({}, function(e,o){
+     db.collection('tblitem', function(err, collection){
+       collection.insert(initItemData, {safe : true}, function(err, result){
+         if(result){
+            db.collection('tblcolor').remove({}, function(e,o){
+                 db.collection('tblcolor', function(err, collection){
+                     collection.insert(initColorData, {safe : true}, function(err, result){
+                         if(result){
+                             res.json({result:true});
+                         }else{
+                             res.json({result:false});
+                         }
+                     });
+                 });
+            });
+          }
+        });
+      });
     });
 };

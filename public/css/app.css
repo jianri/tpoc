@@ -72,7 +72,7 @@ body{
     position:relative;
     width:54px;
     height:27px;
-    border: 0.1em solid #ddd;
+    border-width:0px;
     margin-top:40px;
     float:left;
     cursor:pointer;
@@ -87,17 +87,18 @@ body{
     background-color:#FFC131;
 }
 .colorSelector.red{
-    background-color:#ff5f5e;
+    background-color:#FF5F5E;
 }
 .colorSelector.white{
-    background-color:#fff;
+    background-color:#FFF;
+    border: 0.1em solid #DDD;
 }
 
 .colorPanel{
     position:relative;
     float:left;
-    background-color:#eee;
-    border: 0.1em solid #999;
+    background-color:#E9EAEB;
+    border: 0.1em solid #B6B7BB;
     width:68px;
     height:125px;
     margin:30px 0 0 13px;
@@ -111,7 +112,7 @@ body{
     left:-28px;
     top:10px;
     border:14px solid;
-    border-color:transparent #999 transparent transparent;
+    border-color:transparent #B6B7BB transparent transparent;
 }
 
 .colorPanel:after{
@@ -122,7 +123,7 @@ body{
     left:-26px;
     top:11px;
     border:13px solid;
-    border-color:transparent #eee transparent transparent;
+    border-color:transparent #E9EAEB transparent transparent;
 }
 
 .colorPanel > div {
@@ -153,7 +154,7 @@ body{
 
 .colorPanel #WhitePanel{
     background-color:#FFF;
-    border: 0.1em solid #999;
+    border: 0.1em solid #B6B7BB;
     width:52px;
     height:18px;
 }
@@ -227,8 +228,8 @@ body{
 .editPanel{
     position:relative;
     float:left;
-    background-color:#eee;
-    border: 0.1em solid #999;
+    background-color:#E9EAEB;
+    border: 0.1em solid #B6B7BB;
     width:300px;
     height:370px;
     margin:10px 0 0 16px;
@@ -243,7 +244,7 @@ body{
     left:-34px;
     top:18px;
     border:17px solid;
-    border-color:transparent #999 transparent transparent;
+    border-color:transparent #B6B7BB transparent transparent;
 }
 
 .editPanel:after{
@@ -254,7 +255,7 @@ body{
     left:-32px;
     top:19px;
     border:16px solid;
-    border-color:transparent #eee transparent transparent;
+    border-color:transparent #E9EAEB transparent transparent;
 }
 
 .editPanel p{

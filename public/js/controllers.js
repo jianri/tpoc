@@ -1,15 +1,17 @@
 'use strict';
 
-angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, $http, $location, $rootScope) {
-
-    /*$scope.mnuDashActive = "";
-    if($scope.showColorPanelFlag == false){
-         $scope.mnuActionPlanActive = "inactive";
-    }else{
-         $scope.mnuActionPlanActive = "";
-    }*/
-             
+angular.module('myApp.controllers', []).factory('MenuService', function($rootScope){
+      var flag = {
+          activeflag:false,
+          setFlag:function(flag){
+              this.activeflag = flag;
+              $rootScope.$broadcast('setactiveflag');
+          }
+      };
+      return flag;
+          }).
+controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuService) {
+           
     $scope.loadValues = function(){
          console.log('Load Data');
          $http.post('/api/loadbase', {}, {}).
@@ -26,6 +28,9 @@ angular.module('myApp.controllers', []).
              console.log(data);
              $rootScope.colordata = data;
              $rootScope.mnuDisableFlag = data.savedflag;
+                 if(!data.savedflag){
+                 $scope.mnuActionPlanActive = "inactive";
+                 }
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);
@@ -44,14 +49,21 @@ angular.module('myApp.controllers', []).
     $scope.loadValues();
 
     $scope.goView = function(view){
-             //console.log($rootScope.mnuDisableFlag);
         if($rootScope.mnuDisableFlag){
              $location.path(view);
         }
     }
+             
+    $scope.$on('setactiveflag', function(){
+        if(MenuService.activeflag){
+            $scope.mnuActionPlanActive = "";
+        }else{
+            $scope.mnuActionPlanActive = "inactive";
+        }
+    });
     
   }).
-  controller('ViewCtrl1', function ($scope, $http, $rootScope) {
+  controller('ViewCtrl1', function ($scope, $http, $rootScope, $location, MenuService) {
     //Controller for View1
     $scope.categoryname = $rootScope.basedata.categoryname;
     $scope.arealabel = $rootScope.basedata.arealabel;
@@ -69,32 +81,40 @@ angular.module('myApp.controllers', []).
         }
     };
 
-    $scope.saveColor = function(colorData){
+    $scope.saveColor = function(colorData){//when click color on color panel
          $scope.colorName = colorData.panelcolor;
     };
              
-    $scope.setColor = function(){
+    $scope.setColor = function(){//Click when done
          $http.post('/api/savecolor', {data:{panelcolor:$scope.colorName, savedflag:true}}, {}).
          success(function (data, status, headers, config) {
              console.log("Success:"+JSON.stringify(data));
              
              $rootScope.colordata.panelcolor = $scope.colorName;
              $rootScope.mnuDisableFlag = true;
+             MenuService.setFlag(true);
              $scope.showColorPanelFlag = false;
              $scope.clickdoneflag = true;
+             $location.path('/view2');
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);
          });
     };
              
-    $scope.reset = function(){
-         $http.post('/api/initcolor', {}, {}).
+    $scope.reset = function(){//Reset
+         $http.post('/api/initdata', {}, {}).
          success(function (data, status, headers, config) {
-                 //console.log("Success:"+data);
+                 console.log("Success:"+data);
                  $scope.colorName = 'green';
+                 
                  $rootScope.colordata.panelcolor = 'green';
                  $rootScope.mnuDisableFlag = false;
+                 MenuService.setFlag(false);
+                 $rootScope.itemdata.reasonContent = "";
+                 $rootScope.itemdata.solutionContent = "";
+                 $rootScope.itemdata.supportContent = "";
+                 
                  $scope.showColorPanelFlag = false;
                  $scope.clickdoneflag = false;
          }).
@@ -115,6 +135,7 @@ angular.module('myApp.controllers', []).
      $scope.categorylabel = $rootScope.basedata.categorylabel;
 
      $scope.colorName = $rootScope.colordata.panelcolor;
+             console.log($rootScope.itemdata);
 
      if($rootScope.itemdata.reasonContent!=""){
          $scope.reasonContent = $rootScope.itemdata.reasonContent;
