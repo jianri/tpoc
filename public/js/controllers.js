@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('myApp.controllers', []).factory('MenuService', function($rootScope){
+angular.module('myApp.controllers', [])
+.factory('MenuService', function($rootScope){
       var flag = {
           activeflag:false,
           setFlag:function(flag){
@@ -9,52 +10,53 @@ angular.module('myApp.controllers', []).factory('MenuService', function($rootSco
           }
       };
       return flag;
-          }).
-controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuService) {
+})
+.factory('SceneService', function($rootScope){
+     var scene = {
+         currentscene:false,
+         setScene:function(view){
+             this.currentscene = view;
+             $rootScope.$broadcast('setScene');
+         }
+     };
+     return scene;
+}).
+controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuService, SceneService) {
            
     $scope.loadValues = function(){
-         console.log('Load Data');
-         $http.post('/api/loadbase', {}, {}).
-         success(function (data, status, headers, config) {
-             console.log(data);
-             $rootScope.basedata = data;
-         }).
-         error(function (data, status, headers, config) {
-             console.log("Error:"+status);
-         });
-             
-         $http.post('/api/loadcolor', {}, {}).
-         success(function (data, status, headers, config) {
-             console.log(data);
-             $rootScope.colordata = data;
-             $rootScope.mnuDisableFlag = data.savedflag;
-                 if(!data.savedflag){
-                 $scope.mnuActionPlanActive = "inactive";
-                 }
-         }).
-         error(function (data, status, headers, config) {
-             console.log("Error:"+status);
-         });
-         
-         $http.post('/api/loaditem', {}, {}).
-         success(function (data, status, headers, config) {
-             console.log(data);
-             $rootScope.itemdata = data;
-         }).
-         error(function (data, status, headers, config) {
-             console.log("Error:"+status);
-         });
+       $http.post('/api/loadcolor', {}, {}).
+       success(function (data, status, headers, config) {
+           $scope.savedflag = data.savedflag;
+       }).
+       error(function (data, status, headers, config) {
+           console.log("Error:"+status);
+       });
     };
 
     $scope.loadValues();
-
+           
     $scope.goView = function(view){
-        if($rootScope.mnuDisableFlag){
-             $location.path(view);
+        if(view == '/view1'){
+            $location.path(view);
+        }else{
+            if($scope.savedflag){
+                $location.path(view);
+            }
         }
     }
              
+    $scope.$on('setScene', function(){
+        if(SceneService.currentscene=='view1'){
+            $scope.mnuDashActive = "";
+            $scope.mnuActionPlanActive = "inactive";
+        }else{
+            $scope.mnuDashActive = "inactive";
+            $scope.mnuActionPlanActive = "";
+        }
+    });
+
     $scope.$on('setactiveflag', function(){
+        $scope.savedflag = MenuService.activeflag;
         if(MenuService.activeflag){
             $scope.mnuActionPlanActive = "";
         }else{
@@ -63,20 +65,33 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
     });
     
   }).
-  controller('ViewCtrl1', function ($scope, $http, $rootScope, $location, MenuService) {
+  controller('ViewCtrl1', function ($scope, $http, $rootScope, $location, MenuService, SceneService) {
     //Controller for View1
-    $scope.categoryname = $rootScope.basedata.categoryname;
-    $scope.arealabel = $rootScope.basedata.arealabel;
-    $scope.colorName = $rootScope.colordata.panelcolor;
+    $http.post('/api/loadbase', {}, {}).
+    success(function (data, status, headers, config) {
+         $scope.categoryname = data.categoryname;
+         $scope.arealabel = data.arealabel;
+         $scope.categorylabel = data.categorylabel;
+    }).
+    error(function (data, status, headers, config) {
+        console.log("Error:"+status);
+    });
+             
+    $http.post('/api/loadcolor', {}, {}).
+    success(function (data, status, headers, config) {
+        $scope.colorName = data.panelcolor;
+        $scope.savedflag = data.savedflag;
+    }).
+    error(function (data, status, headers, config) {
+        console.log("Error:"+status);
+    });
 
     $scope.showColorPanelFlag = false;
-    
-    if($rootScope.mnuDisableFlag){
-        $scope.clickdoneflag = true;
-    }
+             
+    SceneService.setScene('view1');
     
     $scope.showColorPanel = function(){
-        if(!$rootScope.mnuDisableFlag){
+        if(!$scope.savedflag){
              $scope.showColorPanelFlag = true;
         }
     };
@@ -89,12 +104,10 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          $http.post('/api/savecolor', {data:{panelcolor:$scope.colorName, savedflag:true}}, {}).
          success(function (data, status, headers, config) {
              console.log("Success:"+JSON.stringify(data));
-             
-             $rootScope.colordata.panelcolor = $scope.colorName;
-             $rootScope.mnuDisableFlag = true;
+
+             $scope.savedflag = true;
              MenuService.setFlag(true);
              $scope.showColorPanelFlag = false;
-             $scope.clickdoneflag = true;
              $location.path('/view2');
          }).
          error(function (data, status, headers, config) {
@@ -105,61 +118,82 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
     $scope.reset = function(){//Reset
          $http.post('/api/initdata', {}, {}).
          success(function (data, status, headers, config) {
-                 console.log("Success:"+data);
                  $scope.colorName = 'green';
-                 
-                 $rootScope.colordata.panelcolor = 'green';
-                 $rootScope.mnuDisableFlag = false;
+
+                 $scope.savedflag = false;
                  MenuService.setFlag(false);
-                 $rootScope.itemdata.reasonContent = "";
-                 $rootScope.itemdata.solutionContent = "";
-                 $rootScope.itemdata.supportContent = "";
                  
                  $scope.showColorPanelFlag = false;
-                 $scope.clickdoneflag = false;
          }).
          error(function (data, status, headers, config) {
                console.log("Error:"+status);
          });
     };
   }).
-  controller('ViewCtrl2', function ($scope, $http, $rootScope) {
+  controller('ViewCtrl2', function ($scope, $http, $rootScope, SceneService) {
      //Controller for View2
      $scope.nullcontent = {
-         reason:'(Enter a reason)',
-         solution:'(Enter a solution and date)',
-         support:'(Enter support needed)'
+         reason:'(enter a reason)',
+         solution:'(enter a solution and date)',
+         support:'(enter support needed)'
      };
-     $scope.categoryname = $rootScope.basedata.categoryname;
-     $scope.arealabel = $rootScope.basedata.arealabel;
-     $scope.categorylabel = $rootScope.basedata.categorylabel;
+     $http.post('/api/loadbase', {}, {}).
+     success(function (data, status, headers, config) {
+             $scope.categoryname = data.categoryname;
+             $scope.arealabel = data.arealabel;
+             $scope.categorylabel = data.categorylabel;
+     }).
+     error(function (data, status, headers, config) {
+           console.log("Error:"+status);
+     });
+     
+     $http.post('/api/loadcolor', {}, {}).
+     success(function (data, status, headers, config) {
+         $scope.colorName = data.panelcolor;
+     }).
+     error(function (data, status, headers, config) {
+           console.log("Error:"+status);
+     });
+             
+     $http.post('/api/loaditem', {}, {}).
+     success(function (data, status, headers, config) {
+         $scope.initItem = data;
 
-     $scope.colorName = $rootScope.colordata.panelcolor;
-             console.log($rootScope.itemdata);
-
-     if($rootScope.itemdata.reasonContent!=""){
-         $scope.reasonContent = $rootScope.itemdata.reasonContent;
-     }else{
-         $scope.reasonContent = $scope.nullcontent.reason;
-     }
-     if($rootScope.itemdata.solutionContent!=""){
-         $scope.solutionContent = $rootScope.itemdata.solutionContent;
-     }else{
-         $scope.solutionContent = $scope.nullcontent.solution;
-     }
-     if($rootScope.itemdata.supportContent!=""){
-         $scope.supportContent = $rootScope.itemdata.supportContent;
-     }else{
-         $scope.supportContent = $scope.nullcontent.support;
-     }
+         if(data.reasonContent){
+             $scope.reasonContent = data.reasonContent;
+             $scope.nullcontent1 = "";
+         }else{
+             $scope.reasonContent = $scope.nullcontent.reason;
+             $scope.nullcontent1 = "placeholder";
+         }
+         if(data.solutionContent){
+             $scope.solutionContent = data.solutionContent;
+             $scope.nullcontent2 = "";
+         }else{
+             $scope.solutionContent = $scope.nullcontent.solution;
+             $scope.nullcontent2 = "placeholder";
+         }
+         if(data.supportContent){
+             $scope.supportContent = data.supportContent;
+             $scope.nullcontent3 = "";
+         }else{
+             $scope.supportContent = $scope.nullcontent.support;
+             $scope.nullcontent3 = "placeholder";
+         }
+     }).
+     error(function (data, status, headers, config) {
+           console.log("Error:"+status);
+     });
+             
+     SceneService.setScene('view2');
 
      $scope.showEditPanelFlag = false;
              
      $scope.showEditPanel = function(){
          $scope.showEditPanelFlag = true;
-         $scope.reasonEditContent = $rootScope.itemdata.reasonContent;
-         $scope.solutionEditContent = $rootScope.itemdata.solutionContent;
-         $scope.supportEditContent = $rootScope.itemdata.supportContent;
+         $scope.reasonEditContent = $scope.initItem.reasonContent;
+         $scope.solutionEditContent = $scope.initItem.solutionContent;
+         $scope.supportEditContent = $scope.initItem.supportContent;
      };
     
      $scope.saveItem = function(){
@@ -171,12 +205,32 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          };
          $http.post('/api/saveitem', {data:sendData}, {}).
          success(function (data, status, headers, config) {
-             console.log("Success:"+data);
-                 $scope.reasonContent = $scope.reasonEditContent;
-                 $scope.solutionContent = $scope.solutionEditContent;
-                 $scope.supportContent = $scope.supportEditContent;
+             console.log("Success:"+JSON.stringify(sendData));
+
              $scope.showEditPanelFlag = false;
-             $rootScope.itemdata = sendData;
+                 
+             $scope.initItem = sendData;
+             if(sendData.reasonContent){
+                 $scope.reasonContent = sendData.reasonContent;
+                 $scope.nullcontent1 = "";
+             }else{
+                 $scope.reasonContent = $scope.nullcontent.reason;
+                 $scope.nullcontent1 = "placeholder";
+             }
+             if(sendData.solutionContent){
+                 $scope.solutionContent = sendData.solutionContent;
+                 $scope.nullcontent2 = "";
+             }else{
+                 $scope.solutionContent = $scope.nullcontent.solution;
+                 $scope.nullcontent2 = "placeholder";
+             }
+             if(sendData.supportContent){
+                 $scope.supportContent = sendData.supportContent;
+                 $scope.nullcontent3 = "";
+             }else{
+                 $scope.supportContent = $scope.nullcontent.support;
+                 $scope.nullcontent3 = "placeholder";
+             }
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);

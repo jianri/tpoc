@@ -1,7 +1,7 @@
 p {{categoryname}}
 div(class="areaLabel"){{arealabel}}
-input(type="button", ng-click="setColor();", value="Click when done", class="btnDone", ng-disabled="clickdoneflag")
-input(type="button", ng-click="reset()", value="Reset", class="btnReset", ng-disabled="!clickdoneflag")
+input(type="button", ng-click="setColor();", value="Click when done", class="btnDone", ng-disabled="savedflag")
+input(type="button", ng-click="reset()", value="Reset", class="btnReset", ng-disabled="!savedflag")
 div
     div(class = "colorSelector {{colorName}}", ng-click="showColorPanel();")
     div(color-panel class="colorPanel", ng-show="showColorPanelFlag")

@@ -165,7 +165,7 @@ body{
 .tileView{
     position:relative;
     width:350px;
-    height:200px;
+    height:230px;
     border: 0.1em solid #ddd;
     margin-top:10px;
     float:left;
@@ -223,6 +223,10 @@ body{
     font-size:14px;
     color:#fff;
     line-height:18px;
+}
+
+.tileView > div.panelContent.placeholder{
+    color:#ddd;
 }
 
 .editPanel{

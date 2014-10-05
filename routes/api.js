@@ -14,9 +14,6 @@ var initColorData = {
     savedflag : false
 };
 var initItemData = {
-    reasonContent:'',
-    solutionContent:'',
-    supportContent:''
 };
 
 db.open(function(e, d){
