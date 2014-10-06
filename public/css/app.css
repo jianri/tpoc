@@ -228,7 +228,7 @@ body{
     font-size:14px;
     color:#fff;
     line-height:18px;
-    max-height:35px;
+    max-height:37px;
     overflow:hidden;
     
     white-space:pre-wrap;
@@ -239,7 +239,7 @@ body{
 }
 
 .tileView > div.panelContent.placeholder{
-    color:#CCC;
+    color:#999;
 }
 
 .editPanel{

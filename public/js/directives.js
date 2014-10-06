@@ -44,7 +44,7 @@ angular.module('myApp.directives', []).
             };
             
             scope.cancelPanel = function(){
-                scope.showEditPanelFlag = false;
+                scope.cancelItem();
             };
         }
     };

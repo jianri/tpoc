@@ -7,13 +7,13 @@ div(class="tileView {{colorName}}", ng-click="showEditPanel();", ng-if="colorNam
     div(id="category")
         {{categoryname}}
     p Reason for Challenge
-    div(class = "panelContent {{nullcontent1}}")
+    div(id="divReasonContent", class = "panelContent {{nullcontent1}}")
         {{reasonContent}}
     p Solution & Anticipated Green Date
-    div(class = "panelContent {{nullcontent2}}")
+    div(id="divSolutionContent", class = "panelContent {{nullcontent2}}")
         {{solutionContent}}
     p Support Needed
-    div(class = "panelContent {{nullcontent3}}")
+    div(id="divSupportContent", class = "panelContent {{nullcontent3}}")
         {{supportContent}}
 
 div(edit-panel class="editPanel", ng-show="showEditPanelFlag")

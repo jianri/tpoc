@@ -142,21 +142,21 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
              console.log('loading data');
          $http.post('/api/loadbase', {}, {}).
          success(function (data, status, headers, config) {
-                 $scope.categoryname = data.categoryname;
-                 $scope.arealabel = data.arealabel;
-                 $scope.categorylabel = data.categorylabel;
+             $scope.categoryname = data.categoryname;
+             $scope.arealabel = data.arealabel;
+             $scope.categorylabel = data.categorylabel;
          }).
          error(function (data, status, headers, config) {
-               console.log("Error:"+status);
+             console.log("Error:"+status);
          });
          
          $http.post('/api/loadcolor', {}, {}).
          success(function (data, status, headers, config) {
              $scope.colorName = data.panelcolor;
-                 console.log($scope.colorName);
+             console.log($scope.colorName);
          }).
          error(function (data, status, headers, config) {
-               console.log("Error:"+status);
+             console.log("Error:"+status);
          });
                  
          $http.post('/api/loaditem', {}, {}).
@@ -206,42 +206,119 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
      $scope.saveItem = function(){
          console.log('Save Item');
          var sendData = {
-             reasonContent:$scope.reasonEditContent,
-             solutionContent:$scope.solutionEditContent,
-             supportContent:$scope.supportEditContent
+             reasonContent: $scope.reasonEditContent,
+             solutionContent: $scope.solutionEditContent,
+             supportContent: $scope.supportEditContent
          };
          $http.post('/api/saveitem', {data:sendData}, {}).
          success(function (data, status, headers, config) {
              console.log("Success:"+JSON.stringify(sendData));
 
              $scope.showEditPanelFlag = false;
-                 
              $scope.initItem = sendData;
-             if(sendData.reasonContent){
-                 $scope.reasonContent = sendData.reasonContent;
-                 $scope.nullcontent1 = "";
-             }else{
-                 $scope.reasonContent = $scope.nullcontent.reason;
-                 $scope.nullcontent1 = "placeholder";
-             }
-             if(sendData.solutionContent){
-                 $scope.solutionContent = sendData.solutionContent;
-                 $scope.nullcontent2 = "";
-             }else{
-                 $scope.solutionContent = $scope.nullcontent.solution;
-                 $scope.nullcontent2 = "placeholder";
-             }
-             if(sendData.supportContent){
-                 $scope.supportContent = sendData.supportContent;
-                 $scope.nullcontent3 = "";
-             }else{
-                 $scope.supportContent = $scope.nullcontent.support;
-                 $scope.nullcontent3 = "placeholder";
-             }
+
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);
          });
      };
      
+     $scope.cancelItem = function(){
+         if($scope.initItem.reasonContent){
+             $scope.reasonContent = $scope.initItem.reasonContent;
+             $scope.nullcontent1 = "";
+         }else{
+             $scope.reasonContent = $scope.nullcontent.reason;
+             $scope.nullcontent1 = "placeholder";
+         }
+         if($scope.initItem.solutionContent){
+             $scope.solutionContent = $scope.initItem.solutionContent;
+             $scope.nullcontent2 = "";
+         }else{
+             $scope.solutionContent = $scope.nullcontent.solution;
+             $scope.nullcontent2 = "placeholder";
+         }
+         if($scope.initItem.supportContent){
+             $scope.supportContent = $scope.initItem.supportContent;
+             $scope.nullcontent3 = "";
+         }else{
+             $scope.supportContent = $scope.nullcontent.support;
+             $scope.nullcontent3 = "placeholder";
+         }
+         $scope.showEditPanelFlag = false;
+     };
+     
+     $scope.$watch('reasonEditContent', function(){
+       if(!$scope.reasonEditContent){
+           $scope.reasonContent = $scope.nullcontent.reason;
+           $scope.nullcontent1 = "placeholder";
+       }else{
+           $scope.nullcontent1 = "";
+           $scope.reasonContent = $scope.reasonEditContent;
+           setTimeout(function(){
+              
+              if(document.getElementById('divReasonContent')){
+                  if(document.getElementById('divReasonContent').offsetHeight<37){
+                      $scope.$apply(function(){
+                          $scope.prevReasonContent = $scope.reasonEditContent;
+                      });
+                  }else{
+                      $scope.$apply(function(){
+                          $scope.reasonEditContent = $scope.prevReasonContent;
+                          $scope.reasonContent = $scope.prevReasonContent;
+                      });
+                  }
+              }
+           }, 2);
+       }
+     });
+     
+     $scope.$watch('solutionEditContent', function(){
+       if(!$scope.solutionEditContent){
+           $scope.solutionContent = $scope.nullcontent.solution;
+           $scope.nullcontent2 = "placeholder";
+       }else{
+           $scope.nullcontent2 = "";
+           $scope.solutionContent = $scope.solutionEditContent;
+           setTimeout(function(){
+                  
+              if(document.getElementById('divSolutionContent')){
+                  if(document.getElementById('divSolutionContent').offsetHeight<37){
+                      $scope.$apply(function(){
+                          $scope.prevSolutionContent = $scope.solutionEditContent;
+                      });
+                  }else{
+                      $scope.$apply(function(){
+                          $scope.solutionEditContent = $scope.prevSolutionContent;
+                          $scope.solutionContent = $scope.prevSolutionContent;
+                      });
+                  }
+              }
+            }, 2);
+       }
+     });
+             
+     $scope.$watch('supportEditContent', function(){
+       if(!$scope.supportEditContent){
+           $scope.supportContent = $scope.nullcontent.support;
+           $scope.nullcontent3 = "placeholder";
+       }else{
+           $scope.nullcontent3 = "";
+           $scope.supportContent = $scope.supportEditContent;
+           setTimeout(function(){
+              if(document.getElementById('divSupportContent')){
+                  if(document.getElementById('divSupportContent').offsetHeight<37){
+                      $scope.$apply(function(){
+                          $scope.prevSupportContent = $scope.supportEditContent;
+                      });
+                  }else{
+                      $scope.$apply(function(){
+                          $scope.supportEditContent = $scope.prevSupportContent;
+                          $scope.supportContent = $scope.prevSupportContent;
+                      });
+                  }
+              }
+          }, 2);
+       }
+     });
   });

@@ -1,18 +1,18 @@
 <p>Edit Action Item</p>
 <p class="area">{{arealabel}}</p>
-<p class="category">{{categorylabel}} : {{categoryname}}</p>
+<p class="category">{{categorylabel}}: {{categoryname}}</p>
 <!--<form name="frmEditPanel">-->
     <div>
         <p>Reason for Challenge</p>
-        <textarea ng-model="reasonEditContent" placeholder="(enter a reason)" required maxlength="68"></textarea>
+        <textarea ng-model="reasonEditContent" placeholder="(enter a reason)" required maxlength="120"></textarea>
     </div>
     <div>
         <p>Solution &amp; Anticipated Green Date</p>
-        <textarea ng-model="solutionEditContent" placeholder="(enter a solution and date)" required maxlength="68"></textarea>
+        <textarea ng-model="solutionEditContent" placeholder="(enter a solution and date)" required maxlength="120"></textarea>
     </div>
     <div>
         <p>Support Needed</p>
-        <textarea ng-model="supportEditContent" placeholder="(enter support needed)" required maxlength="68"></textarea>
+        <textarea ng-model="supportEditContent" placeholder="(enter support needed)" required maxlength="120"></textarea>
     </div>
     <div>
         <button id="btnCancel" ng-click="cancelPanel();">Cancel</button>
