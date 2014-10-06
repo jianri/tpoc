@@ -3,7 +3,8 @@
 angular.module('myApp', [
   'myApp.controllers',
   'myApp.directives',
-  'ngRoute'
+  'ngRoute',
+  'ngAnimate'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.

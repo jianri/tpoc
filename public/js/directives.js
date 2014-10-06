@@ -29,7 +29,8 @@ angular.module('myApp.directives', []).
             
             scope.setPanelColor = function(colorname){
                 var colordata = {panelcolor:colorname};
-                scope.saveColor(colordata);
+                scope.setColor(colordata);
+                scope.showColorPanelFlag = false;
             };
         }
     };

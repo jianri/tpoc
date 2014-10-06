@@ -96,11 +96,11 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
         }
     };
 
-    $scope.saveColor = function(colorData){//when click color on color panel
+    $scope.setColor = function(colorData){//when click color on color panel
          $scope.colorName = colorData.panelcolor;
     };
              
-    $scope.setColor = function(){//Click when done
+    $scope.saveColor = function(){//Click when done
          $http.post('/api/savecolor', {data:{panelcolor:$scope.colorName, savedflag:true}}, {}).
          success(function (data, status, headers, config) {
              console.log("Success:"+JSON.stringify(data));
@@ -137,6 +137,7 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          solution:'(enter a solution and date)',
          support:'(enter support needed)'
      };
+     $scope.maxExceedMsg = '(exceeds maximum text length)';
      
      $scope.loaddata = function(){
              console.log('loading data');
@@ -153,7 +154,7 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
          $http.post('/api/loadcolor', {}, {}).
          success(function (data, status, headers, config) {
              $scope.colorName = data.panelcolor;
-             console.log($scope.colorName);
+             //console.log($scope.colorName);
          }).
          error(function (data, status, headers, config) {
              console.log("Error:"+status);
@@ -289,9 +290,14 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
                       });
                   }else{
                       $scope.$apply(function(){
-                          $scope.solutionEditContent = $scope.prevSolutionContent;
-                          $scope.solutionContent = $scope.prevSolutionContent;
+                          $scope.solutionContent = $scope.maxExceedMsg;
                       });
+                      setTimeout(function(){
+                          $scope.$apply(function(){
+                              $scope.solutionEditContent = $scope.prevSolutionContent;
+                              $scope.solutionContent = $scope.prevSolutionContent;
+                          });
+                      }, 500);
                   }
               }
             }, 2);
