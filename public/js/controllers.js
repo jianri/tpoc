@@ -265,9 +265,14 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
                       });
                   }else{
                       $scope.$apply(function(){
-                          $scope.reasonEditContent = $scope.prevReasonContent;
-                          $scope.reasonContent = $scope.prevReasonContent;
+                            $scope.reasonContent = $scope.maxExceedMsg;
                       });
+                      setTimeout(function(){
+                          $scope.$apply(function(){
+                              $scope.reasonEditContent = $scope.prevReasonContent;
+                              $scope.reasonContent = $scope.prevReasonContent;
+                          });
+                      }, 500);
                   }
               }
            }, 2);
@@ -319,9 +324,14 @@ controller('AppCtrl', function ($scope, $http, $location, $rootScope, MenuServic
                       });
                   }else{
                       $scope.$apply(function(){
-                          $scope.supportEditContent = $scope.prevSupportContent;
-                          $scope.supportContent = $scope.prevSupportContent;
+                          $scope.supportContent = $scope.maxExceedMsg;
                       });
+                      setTimeout(function(){
+                         $scope.$apply(function(){
+                             $scope.supportEditContent = $scope.prevSupportContent;
+                             $scope.supportContent = $scope.prevSupportContent;
+                         });
+                      }, 500);
                   }
               }
           }, 2);
